@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パスワード自動生成</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="main container mt-5 px-5 py-3">
+
+        <!-- トップのタイトル部分 -->
+        <div class="alert m-3 p-2">
+            <h1>パスワード自動生成</h1>
+            <hr>
+            <p class="lead">アルファベット、数字、記号を使用した任意の文字数のランダムな文字列を作成します。</p>
+        </div>
+
+        <!-- 手順の説明 -->
+        <ol class="process">
+            <li>文字数を選択します。<br>(選択可能範囲：10～30)</li>
+            <li>文字列に使用する文字種類を洗濯します。<br>(1つ以上選択。複数選択可。)</li>
+            <li>「文字列生成」をクリックして、文字列を出力します。</li>
+        </ol>
+
+        <!-- 1．文字数の選択 -->
+        <div class="form-group mt-5">
+            <h5>1．文字数を選択</h3>
+            <select class="form-select bg-light" aria-label="Default select example" id="countSelect">
+                <option selected>文字数を選択してください。</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+                <option value="34">34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+                <option value="43">43</option>
+                <option value="44">44</option>
+                <option value="45">45</option>
+                <option value="46">46</option>
+                <option value="47">47</option>
+                <option value="48">48</option>
+                <option value="49">49</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+
+        <!-- 2．文字種類を選択 -->
+        <ul class="list-group mt-4">
+            <h5>2．文字種類を選択</h5>
+            <li class="list-group-item bg-light">
+                <input class="form-check-input me-1" type="checkbox" value="" id="lowercase" aria-label="アルファベット小文字">
+                アルファベット小文字
+            </li>
+            <li class="list-group-item bg-light">
+                <input class="form-check-input me-1" type="checkbox" value="" id="uppercase" aria-label="アルファベット大文字">
+                アルファベット大文字
+            </li>
+            <li class="list-group-item bg-light">
+                <input class="form-check-input me-1" type="checkbox" value="" id="number" aria-label="数字">
+                数字 ( 0 ～ 9 )
+            </li>
+            <li class="list-group-item bg-light">
+                <input class="form-check-input me-1" type="checkbox" value="" id="symbol" aria-label="記号">
+                記号 ( # , - , % , $ , @ )
+            </li>
+        </ul>
+
+        <!-- 自動生成実行スイッチ -->
+        <div class="d-grid gap-2 col-2 mx-auto mt-4">
+            <button class="btn btn-outline-primary" type="button" id="makePWD">自動生成</button>
+        </div>
+
+        <!-- 文字列出力エリア -->
+        <div class="form-group mt-4">
+            <label for="exampleFormControlTextarea1">自動生成されたパスワードが出力されます</label>
+            <textarea class="form-control bg-light" id="areaOutput" rows="5"></textarea>
+        </div>
+
+    </div>
+</body>
+</html>

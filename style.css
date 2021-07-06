@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+body {
+    background-image: url(img/white-paper-bg-L.jpg);
+    background-position: center;
+    background-size: cover;
+}
+.container {
+    background-color: #fff;
+    border-radius: 5px;
+}
+.process {
+    list-style: decimal;
+    padding-left: 80px;
+}
