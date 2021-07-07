@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const strSelected = document.querySelectorAll('input');
     const strOriginal = [];
+    const strSetArray = [];
+    const passArray = [];
 
     strOriginal[0] = "abcdefghijklmnopqrstuvwxyz";
     strOriginal[1] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -16,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
     strOriginal[3] = "#-%$@";
 
     let strLength;
-    let strSet = '';
-    let strSet_out = '';
+    let strSetTemp = '';
+    let strSetOut = '';
     let strProduced = '';
     let strOutput = '';
 
@@ -26,29 +28,49 @@ document.addEventListener('DOMContentLoaded', function() {
         strLength = getCount.value;
     });
 
+    // 選択された文字種類からパスワードに使用する文字群を作成する
+    const makeStrSetArray = () => {
+        for (let j = 0; j < strSelected.length; j++) {
+            if(strSelected[j].checked) {
+                strSetTemp += strOriginal[j];
+            }
+        }
+        strSetOut = strSetTemp;
+        strSetTemp = '';
+
+        // 選択された文字種類一式を配列に変換
+        strSetArray.length = 0;
+        for ( let index = 0; index < strSetOut.split('').length; index++) {
+            strSetArray.push(strSetOut.split('')[index]);
+        }
+    }
+
     // 文字種類を取得する
     for(let i = 0; i < strSelected.length; i++) {
         strSelected[i].addEventListener('change', function () {
-            for (let j = 0; j < strSelected.length; j++) {
-                if(strSelected[j].checked) {
-                    strSet += strOriginal[j];
-                }
-            }
-            strSet_out = strSet;
-            strSet = '';
+            makeStrSetArray();
         });
     }
 
     // 選択された文字種類から指定された文字数の文字列を作成
     Button.addEventListener('click', function() {
+        strProduced = '';
+        strOutput = '';
+        passArray.length = 0;
+        textArea.value = '';
+        console.log(textArea.textContent);
         for (let count = 0; count < strLength; count++) {
-            strProduced += strSet_out.charAt(Math.floor(Math.random() * strSet_out.length));
+            // strSetArrayの中からランダムで選ばれた要素を追加、追加した後要素を削除
+            let t = Math.floor(Math.random() * strSetArray.length);
+            passArray[count] = strSetArray[t];
+            strSetArray.splice(t, 1);
         }
-        console.log(strProduced);
+        for (let m = 0; m < passArray.length; m++) {
+            strProduced += passArray[m];
+        }
+        makeStrSetArray();
         strOutput = strProduced;
         strProduced = '';
-        textArea.textContent = strOutput;
+        textArea.value = strOutput;
     });
-
-
 });
