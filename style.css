@@ -11,5 +11,10 @@ body {
 }
 .process {
     list-style: decimal;
-    padding-left: 80px;
+    padding-left: 30px;
+}
+@media (min-width: 768px) {
+    .process {
+        padding-left: 80px;
+    }
 }
