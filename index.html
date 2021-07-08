@@ -28,8 +28,9 @@
 
         <!-- 手順の説明 -->
         <ol class="process">
-            <li>文字数を選択します。<br>(選択可能範囲：10～50)</li>
-            <li>文字列に使用する文字種類を洗濯します。<br>(1つ以上選択。複数選択可。)</li>
+            <li>文字数を選択します。  <br>(選択可能範囲：10～50)</li>
+            <li>文字列に使用する文字種類を洗濯します。  <br>(1つ以上選択。複数選択可。)</li>
+            <li>同じ文字を含める / 含めないの選択をします。</li>
             <li>「文字列生成」をクリックして、文字列を出力します。</li>
         </ol>
 
@@ -37,7 +38,7 @@
         <div class="form-group mt-5">
             <h5>1．文字数を選択</h3>
             <select class="form-select bg-light" aria-label="Default select example" id="countSelect">
-                <option selected>文字数を選択してください。</option>
+                <option value="0" selected>文字数を選択してください。</option>
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
@@ -88,7 +89,7 @@
         <ul class="list-group mt-4">
             <h5>2．文字種類を選択</h5>
             <li class="list-group-item bg-light">
-                <input class="form-check-input me-1 strSelector" type="checkbox" value="" id="lowercase" aria-label="アルファベット小文字">
+                <input class="form-check-input me-1 strSelector" type="checkbox" value="" id="lowercase" aria-label="アルファベット小文字" checked>
                 アルファベット小文字
             </li>
             <li class="list-group-item bg-light">
@@ -101,19 +102,19 @@
             </li>
             <li class="list-group-item bg-light">
                 <input class="form-check-input me-1 strSelector" type="checkbox" value="" id="symbol" aria-label="記号">
-                記号 ( # , - , % , $ , @ )
+                記号 ( # , & , % , $ , @ )
             </li>
         </ul>
 
         <!-- 3. 文字の重複設定 -->
         <ul class="list-group mt-4">
             <h5>3．文字の重複設定</h5>
-            <p class="text-danger" id="countWarning" style="display: none;">※出力される文字列の文字数が選択された文字数の合計より多いため文字が重複します。</p>
+            <p class="msgWarning text-danger" id="countWarning">※出力される文字列の文字数がパスワードに使用される文字の合計より多いため「文字の重複可」を選択します。</p>
             <li class="list-group-item bg-light">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="doubleOK" checked>
                     <label class="form-check-label" for="doubleNG">
-                      文字の重複を許可
+                       文字の重複可
                     </label>
                 </div>
             </li>
@@ -121,7 +122,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="doubleNG">
                     <label class="form-check-label" for="doubleNG">
-                      同じ文字は使用しない
+                        文字の重複不可
                     </label>
                 </div>
             </li>
