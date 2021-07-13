@@ -11,17 +11,18 @@ body {
 }
 .process {
     list-style: decimal;
-    padding-left: 30px;
+    /* padding-left: 30px; */
 }
-@media (min-width: 768px) {
+
+/* @media (min-width: 768px) {
     .process {
         padding-left: 80px;
     }
-    /* PC画面では手順の各項目を改行しない */
+    PC画面では手順の各項目を改行しない
     .process br {
         display: none;
     }
-}
+} */
 
 /* 警告メッセージの表示 / 非表示の切り替え */
 .msgWarning {

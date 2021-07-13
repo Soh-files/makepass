@@ -1,14 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const getCount = document.getElementById('countSelect');
-    const lowercase = document.getElementById('lowercase');
-    const uppercase = document.getElementById('uppercase');
-    const number = document.getElementById('number');
-    const symbol = document.getElementById('symbol');
     const Button = document.getElementById('makePWD');
     const textArea = document.getElementById('areaOutput');
     const radioDoubleOK = document.getElementById('doubleOK');
     const radioDoubleNG = document.getElementById('doubleNG');
     const countWarning = document.getElementById('countWarning');
+    const strOutputCount = document.getElementById('strOutputCount');
 
     const strSelected = document.querySelectorAll('.strSelector');
     const strOriginal = [];
@@ -21,10 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
     strOriginal[3] = "#&%$@";
 
     let strLength;
+    let strCount;
     let strSetTemp = '';
     let strSetOut = '';
     let strProduced = '';
     let strOutput = '';
+    let strOutputSet = '';
 
     // 選択された文字種類からパスワードに使用する文字群を作成する
     const makeStrSetArray = () => {
@@ -88,6 +87,36 @@ document.addEventListener('DOMContentLoaded', function() {
         strLength = getCount.value;
         compareCount();
     });
+
+    // 全角の文字を半角に変換して返す
+    function toHalfWidth(strVal){
+        // 半角変換
+        var halfVal = strVal.replace(/[！-～]/g,
+          function( tmpStr ) {
+            // 文字コードをシフト
+            return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 );
+          }
+        );
+       
+        // 文字コードシフトで対応できない文字の変換
+        return halfVal.replace(/”/g, "\"")
+          .replace(/’/g, "'")
+          .replace(/‘/g, "`")
+          .replace(/￥/g, "\\")
+          .replace(/　/g, " ")
+          .replace(/〜/g, "~");
+    }
+
+    // 出力される文字列数を取得
+    strOutputCount.value = 1;
+    strCount = 1;
+    strOutputCount.addEventListener('change', function() {
+        strCount = strOutputCount.value;
+        let strCountTr;
+        strCountTr = toHalfWidth(strCount);
+        strCount = strCountTr;
+        strOutputCount.value = strCountTr;
+    })
     
     // 文字種類を取得する
     for(let i = 0; i < strSelected.length; i++) {
@@ -103,30 +132,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // 選択された文字種類から指定された文字数の文字列を作成
     Button.addEventListener('click', function() {
         if ( isLengthSelected() === true && isStrSelected() === true ) {
-            // パスワードの文字数、使用する文字の選択がされていたら以下実行
-            strProduced = '';
-            strOutput = '';
-            passArray.length = 0;
-            textArea.value = '';
-            for (let count = 0; count < strLength; count++) {
-                // strSetArrayの中からランダムで選ばれた要素を追加
-                let t = Math.floor(Math.random() * strSetArray.length);
-                passArray[count] = strSetArray[t];
-    
-                // 「同じ文字を使用しない」が選択されている場合は追加した要素を削除
-                if(radioDoubleNG.checked) {
-                    strSetArray.splice(t, 1);
+            for (let a = 0; a < strCount; a++) {
+                // パスワードの文字数、使用する文字の選択がされていたら以下実行
+                strProduced = '';
+                strOutput = '';
+                passArray.length = 0;
+                for (let count = 0; count < strLength; count++) {
+                    // strSetArrayの中からランダムで選ばれた要素を追加
+                    let t = Math.floor(Math.random() * strSetArray.length);
+                    passArray[count] = strSetArray[t];
+        
+                    // 「同じ文字を使用しない」が選択されている場合は追加した要素を削除
+                    if(radioDoubleNG.checked) {
+                        strSetArray.splice(t, 1);
+                    }
                 }
+                for (let m = 0; m < passArray.length; m++) {
+                    strProduced += passArray[m];
+                }
+                makeStrSetArray();
+                strOutput = strProduced;
+                strProduced = '';
+                strOutputSet += strOutput + "\n";
             }
-            for (let m = 0; m < passArray.length; m++) {
-                strProduced += passArray[m];
-            }
-            makeStrSetArray();
-            strOutput = strProduced;
-            strProduced = '';
-            textArea.value = strOutput;
+            textArea.value = strOutputSet;
+            strOutputSet = '';
+        } else if ( isLengthSelected() === true && isStrSelected() === false ) {
+            window.alert('使用する文字種類が選択されていません(1つ以上選択する必要があります)。確認の上再度実行してください。');
+        } else if ( isLengthSelected() === false && isStrSelected() === true ) {
+            window.alert('文字数が選択されていません。確認の上再度実行してください。');
         } else {
-            window.alert('設定に誤りがあります。確認の上再度実行してください。');
+            window.alert('文字数、文字種類の設定に誤りがあります。確認の上再度実行してください。')
         }
     });
 });
